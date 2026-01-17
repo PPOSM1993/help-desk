@@ -109,7 +109,8 @@ python manage.py runserver
 ### 🔑 Variables de Entorno
 
 - Frontend (frontend/.env.local)
-```NEXT_PUBLIC_API_URL=http://localhost:8000/api
+```
+NEXT_PUBLIC_API_URL=http://localhost:8000/api
 ```
 
 - Backend (backend/.env)
