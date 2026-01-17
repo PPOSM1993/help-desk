@@ -1,9 +1,19 @@
+"use client"
 import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { LogIn, User2, UserPlus } from "lucide-react"
+import { useRouter } from 'next/navigation'
 
 export default function Home() {
+
+  const router = useRouter();
+
+  const loginPage = () => {
+    //router.push('/login')
+    console.log("login")
+  }
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-zinc-50 dark:bg-black">
       <main className="flex w-full max-w-4xl flex-col items-center justify-center gap-16 px-6 py-32 text-center sm:text-left">
@@ -29,22 +39,25 @@ export default function Home() {
 
         {/* CTA */}
         <div className="flex w-full max-w-md flex-col gap-4 sm:flex-row sm:justify-start">
-          <Link href="/login" className="w-full">
-            <Button className="h-12 w-full rounded-sm text-base">
+          <div className="w-full">
+            <Button
+              className="h-10 w-full rounded-sm text-base"
+              onClick={() => console.log("login")}
+            >
               <LogIn className="mr-2 h-4 w-4" />
               Iniciar sesión
             </Button>
-          </Link>
+          </div>
 
-          <Link href="/register" className="w-full">
+          <div className="w-full">
             <Button
               variant="outline"
-              className="h-12 w-full rounded-sm text-base"
+              className="h-10 w-full rounded-sm text-base"
             >
               <UserPlus className="mr-2 h-4 w-4" />
               Crear cuenta
             </Button>
-          </Link>
+          </div>
         </div>
 
       </main>
