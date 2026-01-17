@@ -120,3 +120,16 @@ DEBUG=True
 SECRET_KEY=your-secret-key
 DATABASE_URL=postgres://user:password@localhost:5432/mesa_ayuda
 ```
+
+### 📅 Estado del Proyecto
+
+- 🚧 En desarrollo activo
+  
+ - Estructura base del proyecto
+ - Integración plantilla frontend
+ - Setup backend Django + DRF
+ - Modelo de usuarios
+ - Sistema de tickets
+ - Autenticación
+   Deploy
+```
