@@ -123,7 +123,7 @@ DATABASE_URL=postgres://user:password@localhost:5432/mesa_ayuda
 
 ### 📅 Estado del Proyecto
 
-- 🚧 En desarrollo activo
+🚧 En desarrollo activo
   
  - Estructura base del proyecto
  - Integración plantilla frontend
