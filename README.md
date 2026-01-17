@@ -104,3 +104,18 @@ python manage.py migrate
 python manage.py runserver
 ```
 
+---
+
+### 🔑 Variables de Entorno
+
+- Frontend (frontend/.env.local)
+```NEXT_PUBLIC_API_URL=http://localhost:8000/api
+```
+
+B- ackend (backend/.env)
+
+```
+DEBUG=True
+SECRET_KEY=your-secret-key
+DATABASE_URL=postgres://user:password@localhost:5432/mesa_ayuda
+```
