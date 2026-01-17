@@ -43,6 +43,17 @@ rut_validator = RegexValidator(
 )
 
 class User(AbstractBaseUser, PermissionsMixin):
+    ROLE_CHOICES = (
+        ('admin', 'Admin'),
+        ('agent', 'Agent'),
+        ('client', 'Client'),
+    )
+
+    role = models.CharField(
+        max_length=20,
+        choices=ROLE_CHOICES,
+        default='client'
+    )
     email = models.EmailField(unique=True)
     username = models.CharField(max_length=150, unique=True)
     first_name = models.CharField(max_length=150)
