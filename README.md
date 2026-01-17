@@ -78,7 +78,7 @@ El proyecto utiliza un **monorepo**, separando claramente frontend y backend, y 
 
 ### Requisitos
 - Node.js 18+
-- Python 3.11+
+- Python 3.10+
 - PostgreSQL
 - Git
 
