@@ -112,7 +112,7 @@ python manage.py runserver
 ```NEXT_PUBLIC_API_URL=http://localhost:8000/api
 ```
 
-B- ackend (backend/.env)
+- Backend (backend/.env)
 
 ```
 DEBUG=True
