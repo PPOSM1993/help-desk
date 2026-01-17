@@ -42,3 +42,53 @@ El proyecto utiliza un **monorepo**, separando claramente frontend y backend, y 
 
 ## 📂 Estructura del Proyecto
 
+
+
+---
+
+## 🧩 Funcionalidades (planificadas)
+
+### 👤 Usuarios
+- Registro / Login
+- Roles:
+  - Usuario
+  - Soporte
+  - Administrador
+
+### 🎫 Tickets
+- Crear tickets
+- Asignar prioridad
+- Estados:
+  - Abierto
+  - En progreso
+  - Resuelto
+  - Cerrado
+- Comentarios y seguimiento
+- Historial de cambios
+
+### 📊 Dashboard
+- Resumen de tickets
+- Tickets por estado
+- Tickets por usuario
+- Métricas básicas
+
+---
+
+## 🛠️ Instalación y Uso
+
+### Requisitos
+- Node.js 18+
+- Python 3.11+
+- PostgreSQL
+- Git
+
+---
+
+### ▶️ Frontend
+
+```bash
+cd frontend
+npm install
+npm run dev
+
+
