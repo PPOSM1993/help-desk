@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@radix-ui/react-label"
 import { LogIn, MoveLeftIcon } from "lucide-react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 
 
 type LoginFormValues = {
@@ -29,6 +30,8 @@ export default function LoginForm() {
             password: "",
         },
     })
+
+
     return (
         <>
             <div className="flex flex-col  space-y-3 border-b border-gray-200 bg-white px-4 py-6 text-center">
@@ -93,7 +96,7 @@ export default function LoginForm() {
                             </div>
                         </div>
 
-                        <Link href="/auth/register" className="m-4 text-sm text-muted-foreground">
+                        <Link href="/register" className="m-4 text-sm text-muted-foreground">
                             No tienes una cuenta?
                         </Link>
 
