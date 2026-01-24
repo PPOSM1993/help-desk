@@ -40,7 +40,7 @@ export default function Home() {
         <div className="flex w-full max-w-md flex-col gap-4 sm:flex-row sm:justify-start">
           <div className="w-full">
             <Button
-              className="h-10 w-full rounded-sm text-base"
+              className="h-10 w-full rounded-sm text-base rounded-none border-none cursor-pointer"
               onClick={() => loginPage()}
             >
               <LogIn className="mr-2 h-4 w-4" />
@@ -51,7 +51,7 @@ export default function Home() {
           <div className="w-full">
             <Button
               variant="outline"
-              className="h-10 w-full rounded-sm text-base"
+              className="h-10 w-full rounded-sm text-base rounded-none border-none cursor-pointer"
             >
               <UserPlus className="mr-2 h-4 w-4" />
               Crear cuenta
