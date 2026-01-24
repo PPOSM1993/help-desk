@@ -10,8 +10,7 @@ export default function Home() {
   const router = useRouter();
 
   const loginPage = () => {
-    //router.push('/login')
-    console.log("login")
+    router.push('/login')
   }
 
   return (
@@ -42,7 +41,7 @@ export default function Home() {
           <div className="w-full">
             <Button
               className="h-10 w-full rounded-sm text-base"
-              onClick={() => console.log("login")}
+              onClick={() => loginPage()}
             >
               <LogIn className="mr-2 h-4 w-4" />
               Iniciar sesión
