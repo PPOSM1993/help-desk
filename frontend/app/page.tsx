@@ -13,6 +13,10 @@ export default function Home() {
     router.push('/login')
   }
 
+  const registerPage = () => {
+    router.push('/register')
+  }
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-zinc-50 dark:bg-black">
       <main className="flex w-full max-w-4xl flex-col items-center justify-center gap-16 px-6 py-32 text-center sm:text-left">
@@ -52,6 +56,7 @@ export default function Home() {
             <Button
               variant="outline"
               className="h-10 w-full rounded-sm text-base rounded-none border-none cursor-pointer"
+              onClick={() => registerPage()}
             >
               <UserPlus className="mr-2 h-4 w-4" />
               Crear cuenta
