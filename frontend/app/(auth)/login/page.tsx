@@ -3,6 +3,7 @@ import Image from "next/image"
 
 import LoginCard from "./components/LoginCard"
 import { Button } from "@/components/ui/button"
+import { MoveLeftIcon } from "lucide-react"
 
 export default function Login() {
     return (
@@ -25,12 +26,6 @@ export default function Login() {
 
                         <div className="w-full">
                             <LoginCard />
-
-                            <Button
-                                className="h-10 w-full rounded-sm text-base mt-4"
-                            >
-                                Iniciar sesión
-                            </Button>
                         </div>
 
 
