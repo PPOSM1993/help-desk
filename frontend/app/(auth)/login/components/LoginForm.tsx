@@ -21,6 +21,12 @@ import { Input } from "@/components/ui/input"
 import { LogIn, MoveLeftIcon } from "lucide-react"
 import { login } from "@/lib/api/auth"
 
+import { zodResolver } from "@hookform/resolvers/zod"
+import { loginSchema, LoginSchema } from "@/lib/validations/auth"
+
+import { Loader2 } from "lucide-react"
+
+
 type LoginFormValues = {
   username: string
   password: string
@@ -31,7 +37,8 @@ export default function LoginForm() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
 
-  const form = useForm<LoginFormValues>({
+  const form = useForm<LoginSchema>({
+    resolver: zodResolver(loginSchema),
     defaultValues: {
       username: "",
       password: "",
@@ -41,26 +48,28 @@ export default function LoginForm() {
   const backPage = () => {
     router.push("/")
   }
-  const onSubmit = async (values: LoginFormValues) => {
+
+  const onSubmit = async (data: LoginSchema) => {
     try {
-      const data = await login(values)
+      setIsLoading(true)
 
-      // tokens
-      localStorage.setItem("access", data.access)
-      localStorage.setItem("refresh", data.refresh)
+      const response = await login(data)
 
-      toast.success("Bienvenido", {
-        description: "Has iniciado sesión correctamente",
+      toast.success("Bienvenido 👋", {
+        description: "Sesión iniciada correctamente",
       })
 
-      router.push("/dashboard")
-    } catch (error: any) {
+      localStorage.setItem("access", response.access)
+      localStorage.setItem("refresh", response.refresh)
 
+      router.push("/dashboard")
+
+    } catch (error: any) {
       toast.error("Error al iniciar sesión", {
         description: error.message || "Credenciales incorrectas",
       })
-      console.log("LOGIN ERROR:", error);
-      setErrorMessage(error.message);
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -134,12 +143,22 @@ export default function LoginForm() {
           {/* SUBMIT */}
           <Button
             type="submit"
-            className="h-10 w-full bg-green-600 text-white rounded-none hover:bg-green-600"
             disabled={isLoading}
+            className="h-10 w-full bg-green-600 hover:bg-green-600 rounded-none"
           >
-            <LogIn className="mr-2 h-4 w-4" />
-            {isLoading ? "Ingresando..." : "Iniciar sesión"}
+            {isLoading ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Iniciando sesión...
+              </>
+            ) : (
+              <>
+                <LogIn className="mr-2 h-4 w-4" />
+                Iniciar sesión
+              </>
+            )}
           </Button>
+
 
           {/* REGISTER */}
           <Link
