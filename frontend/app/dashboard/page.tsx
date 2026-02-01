@@ -1,9 +1,13 @@
 export default function DashboardPage() {
   return (
-    <div className="p-6">
-      <h1 className="text-3xl font-bold">
-        Dashboard 🚀
+    <div>
+      <h1 className="text-2xl font-semibold mb-4">
+        Dashboard
       </h1>
+
+      <p className="text-muted-foreground">
+        Aquí irá el resumen del sistema de mesa de ayuda.
+      </p>
     </div>
   )
 }
