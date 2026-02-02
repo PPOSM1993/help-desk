@@ -26,7 +26,7 @@ export function Sidebar({ collapsed }: Props) {
     >
 
       {/* Logo */}
-      <div className="flex justify-center mb-6">
+      <div className="flex justify-left mb-6">
         <Image
           src="/logo.png"
           alt="Mesa de Ayuda"
@@ -34,6 +34,7 @@ export function Sidebar({ collapsed }: Props) {
           height={100}
         />
       </div>
+      <hr className="p-2 border-md border-primary/10 mb-2" />
 
       <nav className="space-y-2">
         {menuItems.map(({ label, href, icon: Icon }) => (
