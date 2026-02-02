@@ -13,28 +13,28 @@ export function StatsGrid() {
         title="Total tickets"
         value={128}
         icon={Ticket}
-        color="blue"
+        variant="blue"
       />
 
       <StatCard
         title="Abiertos"
         value={42}
         icon={Clock}
-        color="yellow"
+        variant="yellow"
       />
 
       <StatCard
         title="Cerrados"
         value={86}
         icon={CheckCircle}
-        color="green"
+        variant="green"
       />
 
       <StatCard
         title="Usuarios"
         value={23}
         icon={Users}
-        color="violet"
+        variant="violet"
       />
     </div>
   )
