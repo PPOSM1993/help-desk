@@ -7,7 +7,8 @@ import {
   Search,
   Bell,
   Sun,
-  User
+  User,
+  LogOut
 } from "lucide-react"
 
 import {
@@ -65,6 +66,9 @@ export function Navbar({ onMenuClick }: Props) {
                 <User className="h-4 w-4" />
               </AvatarFallback>
             </Avatar>
+          </Button>
+          <Button variant="ghost" size="icon">
+            <LogOut className="h-5 w-5" />
           </Button>
         </div>
 
