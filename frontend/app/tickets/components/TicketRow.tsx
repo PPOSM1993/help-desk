@@ -20,6 +20,8 @@ export function TicketRow({ ticket }: Props) {
       <div className="flex items-center gap-3">
         <TicketPriorityBadge priority={ticket.priority} />
         <TicketStatusBadge status={ticket.status} />
+        <span>{new Date(ticket.created_at).toLocaleDateString()}</span>
+
       </div>
     </div>
   )

@@ -14,7 +14,7 @@ export function TicketList({ tickets }: Props) {
   }
 
   return (
-    <div className="rounded-md border">
+    <div className="rounded-none border bg-background">
       {tickets.map(ticket => (
         <TicketRow key={ticket.id} ticket={ticket} />
       ))}

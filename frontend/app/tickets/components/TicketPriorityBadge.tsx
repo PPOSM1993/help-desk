@@ -6,7 +6,7 @@ import { TicketPriority } from "../types/ticket"
 const styles = {
   low: "bg-gray-200 text-gray-800",
   medium: "bg-yellow-200 text-yellow-800",
-  high: "bg-orange-200 text-orange-800",
+  high: "bg-orange-200 text-orange-800 rounded-xs",
   urgent: "bg-red-200 text-red-800",
 }
 
