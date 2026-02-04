@@ -139,3 +139,22 @@ class PasswordResetConfirmView(APIView):
         user.set_password(password)
         user.save()
         return Response({'detail': 'Tu contraseña ha sido restablecida correctamente.'})
+
+
+class LogoutView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        try:
+            refresh_token = request.data.get("refresh")
+            token = RefreshToken(refresh_token)
+            token.blacklist()
+            return Response(
+                {"detail": "Sesión cerrada correctamente"},
+                status=status.HTTP_200_OK
+            )
+        except Exception:
+            return Response(
+                {"error": "Token inválido"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
