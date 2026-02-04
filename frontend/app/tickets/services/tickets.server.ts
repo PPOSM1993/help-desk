@@ -1,15 +1,8 @@
+"use server"
 import { getAccessToken } from "@/lib/auth.server"
+import { Ticket } from "../types/ticket"
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL
-
-export type Ticket = {
-  id: number
-  title: string
-  description: string
-  priority: string
-  status: string
-  created_at: string
-}
 
 export async function getTickets(): Promise<Ticket[]> {
   const token = await getAccessToken()
