@@ -1,38 +1,31 @@
 "use client"
 
-import { Ticket } from "../types"
-import { Card } from "@/components/ui/card"
-import { TicketStatusBadge } from "./TicketStatusBadge"
-
-type Props = {
-  tickets: Ticket[]
+type Ticket = {
+  id: number
+  title: string
+  status: string
+  priority: string
 }
 
-export function TicketTable({ tickets }: Props) {
-  if (tickets.length === 0) {
-    return (
-      <p className="text-sm text-muted-foreground">
-        No hay tickets registrados
-      </p>
-    )
-  }
-
+export function TicketTable({ tickets }: { tickets: Ticket[] }) {
   return (
-    <div className="space-y-3">
-      {tickets.map(ticket => (
-        <Card key={ticket.id} className="p-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <h3 className="font-medium">{ticket.title}</h3>
-              <p className="text-sm text-muted-foreground">
-                {ticket.description}
-              </p>
-            </div>
-
-            <TicketStatusBadge status={ticket.status} />
-          </div>
-        </Card>
-      ))}
-    </div>
+    <table className="w-full border">
+      <thead>
+        <tr>
+          <th>Título</th>
+          <th>Estado</th>
+          <th>Prioridad</th>
+        </tr>
+      </thead>
+      <tbody>
+        {tickets.map(t => (
+          <tr key={t.id}>
+            <td>{t.title}</td>
+            <td>{t.status}</td>
+            <td>{t.priority}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
   )
 }

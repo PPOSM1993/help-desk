@@ -25,6 +25,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { loginSchema, LoginSchema } from "@/lib/validations/auth"
 
 import { Loader2 } from "lucide-react"
+import { loginAction } from "../actions"
 
 
 type LoginFormValues = {
@@ -49,30 +50,22 @@ export default function LoginForm() {
     router.push("/")
   }
 
+
   const onSubmit = async (data: LoginSchema) => {
     try {
       setIsLoading(true)
 
-      const response = await login(data)
+      await loginAction(data)
 
-      toast.success("Bienvenido 👋", {
-        description: "Sesión iniciada correctamente",
-      })
-
-      localStorage.setItem("access", response.access)
-      localStorage.setItem("refresh", response.refresh)
-
+      toast.success("Bienvenido 👋")
       router.push("/dashboard")
 
-    } catch (error: any) {
-      toast.error("Error al iniciar sesión", {
-        description: error.message || "Credenciales incorrectas",
-      })
+    } catch (err: any) {
+      toast.error(err.message)
     } finally {
       setIsLoading(false)
     }
   }
-
 
   return (
     <div className="flex flex-col space-y-3 border-b border-gray-200 bg-white px-4 py-6 text-center">
