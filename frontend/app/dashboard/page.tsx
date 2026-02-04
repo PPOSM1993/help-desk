@@ -5,6 +5,7 @@ import { TicketsByStatus } from "./components/charts/TicketsByStatus"
 import { TicketsByDate } from "./components/charts/TicketsByDate"
 
 export default function DashboardPage() {
+  
   return (
     <div className="space-y-6">
 
