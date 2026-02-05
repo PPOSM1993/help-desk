@@ -37,6 +37,8 @@ export default function ToolbarPage({ table, pageSize, setPageSize }: any) {
           <SelectItem value="closed">Cerrado</SelectItem>
           <SelectItem value="in_progress">En Progreso</SelectItem>
           <SelectItem value="expired">Expirado</SelectItem>
+          <SelectItem value="pending">Pendiente</SelectItem>
+          <SelectItem value="resolved">Resuelto</SelectItem>
         </SelectContent>
       </Select>
 
