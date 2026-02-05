@@ -1,13 +1,26 @@
-import { TicketList } from "./components/TicketList"
 import { getTickets } from "./services/tickets.server"
+import { TicketTable } from "./components/TicketTable"
+import { TicketEmptyState } from "./components/TicketEmptyState"
 
 export default async function TicketsPage() {
   const tickets = await getTickets()
 
+  if (!tickets || tickets.length === 0) {
+    return <TicketEmptyState />
+  }
+
   return (
-    <section className="space-y-6">
-      <h1 className="text-2xl font-semibold">🎫 Tickets</h1>
-      <TicketList tickets={tickets} />
-    </section>
+    <div className="space-y-6">
+      {/* HEADER */}
+      <div>
+        <h1 className="text-2xl font-semibold">Tickets</h1>
+        <p className="text-sm text-muted-foreground">
+          Gestión y seguimiento de tickets de soporte
+        </p>
+      </div>
+
+      {/* DATA TABLE */}
+      <TicketTable data={tickets} />
+    </div>
   )
 }
