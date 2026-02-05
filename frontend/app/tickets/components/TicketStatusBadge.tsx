@@ -10,7 +10,7 @@ const map = {
 
 export function TicketStatusBadge({ status }: { status: TicketStatus }) {
   return (
-    <Badge variant="secondary">
+    <Badge variant="secondary" className="rounded-none">
       {map[status]}
     </Badge>
   )

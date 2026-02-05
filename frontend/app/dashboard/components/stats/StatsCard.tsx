@@ -45,8 +45,8 @@ export function StatCard({
   const styles = variants[variant]
 
   return (
-    <Card className={cn("border", styles.card)}>
-      <CardContent className="p-4 flex flex-col items-start gap-3 cursor-pointer">
+    <Card className={cn("border-none rounded-sm", styles.card)}>
+      <CardContent className="p-4 flex flex-col items-start gap-2 cursor-pointer">
         {/* Icono */}
         <div
           className={cn(

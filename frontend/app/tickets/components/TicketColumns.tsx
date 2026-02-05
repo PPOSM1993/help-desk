@@ -1,11 +1,15 @@
-// app/tickets/components/TicketColumns.tsx
-"use client"
-
 import { ColumnDef } from "@tanstack/react-table"
+import { Ticket } from "../types"
+import { TicketStatusBadge } from "./TicketStatusBadge"
+import { TicketPriorityBadge } from "./TicketPriorityBadge"
 import { TicketActions } from "./TicketActions"
-import { Ticket } from "../types/ticket"
+
 
 export const columns: ColumnDef<Ticket>[] = [
+  {
+    accessorKey: "id",
+    header: "ID",
+  },
   {
     accessorKey: "title",
     header: "Título",
@@ -13,10 +17,16 @@ export const columns: ColumnDef<Ticket>[] = [
   {
     accessorKey: "status",
     header: "Estado",
+    cell: ({ row }) => (
+      <TicketStatusBadge status={row.original.status} />
+    ),
   },
   {
     accessorKey: "priority",
     header: "Prioridad",
+    cell: ({ row }) => (
+      <TicketPriorityBadge priority={row.original.priority} />
+    ),
   },
   {
     accessorKey: "created_at",
@@ -26,6 +36,7 @@ export const columns: ColumnDef<Ticket>[] = [
   },
   {
     id: "actions",
+    header: "Acciones",
     cell: ({ row }) => <TicketActions ticket={row.original} />,
   },
 ]

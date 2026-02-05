@@ -49,9 +49,9 @@ export function TicketTable({ data }: { data: Ticket[] }) {
       {/* Toolbar va aquí */}
       <ToolbarPage table={table} pageSize={pageSize} setPageSize={setPageSize} />
 
-      <div className="rounded-md border">
+      <div className="rounded-md border rounded-none shadow-sm">
         <Table>
-          <TableHeader>
+          <TableHeader className="bg-blue-300">
             {table.getHeaderGroups().map(headerGroup => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map(header => (
@@ -66,7 +66,7 @@ export function TicketTable({ data }: { data: Ticket[] }) {
             ))}
           </TableHeader>
 
-          <TableBody>
+          <TableBody className="bg-blue-100">
             {table.getRowModel().rows.map(row => (
               <TableRow key={row.id}>
                 {row.getVisibleCells().map(cell => (
