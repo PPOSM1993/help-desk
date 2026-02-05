@@ -18,7 +18,7 @@ export function StatsGrid() {
 
       <StatCard
         title="Abiertos"
-        value={42}
+        value={50}
         icon={Clock}
         variant="yellow"
       />
@@ -34,7 +34,7 @@ export function StatsGrid() {
         title="Usuarios"
         value={23}
         icon={Users}
-        variant="violet"
+        variant="red"
       />
     </div>
   )

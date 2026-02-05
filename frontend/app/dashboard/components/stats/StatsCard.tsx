@@ -1,4 +1,4 @@
-import { Card, CardContent } from "@/components/ui/card"
+import { Card } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
 import { LucideIcon } from "lucide-react"
 
@@ -6,34 +6,15 @@ type StatCardProps = {
   title: string
   value: number | string
   icon: LucideIcon
-  variant?: "blue" | "green" | "yellow" | "red" | "indigo" | "violet"
+  variant?: "blue" | "green" | "yellow" | "red"
+  onClick?: () => void
 }
 
 const variants = {
-  blue: {
-    card: "bg-blue-500 border-blue-200",
-    icon: "text-gray-100 bg-blue-500",
-  },
-  green: {
-    card: "bg-green-500 border-green-200",
-    icon: "text-gray-100 bg-green-500",
-  },
-  yellow: {
-    card: "bg-yellow-500 border-yellow-200",
-    icon: "text-gray-100 bg-yellow-500",
-  },
-  red: {
-    card: "bg-red-50 border-red-200",
-    icon: "text-red-600 bg-red-100",
-  },
-  indigo: {
-    card: "bg-indigo-500 border-indigo-200",
-    icon: "text-indigo-600 bg-indigo-100",
-  },
-  violet: {
-    card: "bg-red-500 border-violet-200",
-    icon: "text-gray-100 bg-red-500",
-  },
+  blue: "bg-blue-500",
+  green: "bg-green-500",
+  yellow: "bg-yellow-400",
+  red: "bg-red-500",
 }
 
 export function StatCard({
@@ -41,31 +22,30 @@ export function StatCard({
   value,
   icon: Icon,
   variant = "blue",
+  onClick,
 }: StatCardProps) {
-  const styles = variants[variant]
-
   return (
-    <Card className={cn("border-none rounded-sm", styles.card)}>
-      <CardContent className="p-4 flex flex-col items-start gap-2 cursor-pointer">
-        {/* Icono */}
-        <div
-          className={cn(
-            "p-2 rounded-md",
-            styles.icon
-          )}
-        >
-          <Icon className="h-5 w-5" />
-        </div>
+    <Card
+      className={cn(
+        "relative overflow-hidden rounded-sm border-none text-white cursor-pointer",
+        variants[variant]
+      )}
+      onClick={onClick}
+    >
+      {/* Contenido */}
+      <div className="p-4">
+        <h3 className="text-3xl font-bold leading-none">{value}</h3>
+        <p className="text-sm mt-1">{title}</p>
+      </div>
 
-        {/* Texto */}
-        <p className="text-sm text-muted-foreground">
-          {title}
-        </p>
+      {/* Ícono grande decorativo */}
+      <Icon className="absolute right-4 top-4 h-14 w-14 text-white/30" />
 
-        <p className="text-3xl font-bold">
-          {value}
-        </p>
-      </CardContent>
+      {/* Footer */}
+      <div className="bg-black/10 px-4 py-2 text-sm flex items-center justify-center gap-1 hover:bg-black/20 transition">
+        Más info
+        <span>→</span>
+      </div>
     </Card>
   )
 }

@@ -2,7 +2,7 @@
 
 import { Ticket } from "../types/ticket"
 import { Button } from "@/components/ui/button"
-import { MoreHorizontal } from "lucide-react"
+import { MoreHorizontal, Pencil, Trash2Icon } from "lucide-react"
 
 import {
   DropdownMenu,
@@ -17,29 +17,15 @@ type Props = {
 
 export function TicketActions({ ticket }: Props) {
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon">
-          <MoreHorizontal className="h-4 w-4" />
+    <>
+      <div className="flex gap-2">
+        <Button variant="ghost" size="icon" className="bg-yellow-500 hover:bg-yellow-500 rounded-none ">
+          <Pencil className="h-4 w-4 text-white" />
         </Button>
-      </DropdownMenuTrigger>
-
-      <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => console.log("Ver", ticket.id)}>
-          Ver detalle
-        </DropdownMenuItem>
-
-        <DropdownMenuItem onClick={() => console.log("Editar", ticket.id)}>
-          Editar
-        </DropdownMenuItem>
-
-        <DropdownMenuItem
-          className="text-destructive"
-          onClick={() => console.log("Cerrar", ticket.id)}
-        >
-          Cerrar ticket
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+        <Button variant="ghost" size="icon" className="bg-red-500 hover:bg-red-500 rounded-none">
+          <Trash2Icon className="h-4 w-4 text-white" />
+        </Button>
+      </div>
+    </>
   )
 }

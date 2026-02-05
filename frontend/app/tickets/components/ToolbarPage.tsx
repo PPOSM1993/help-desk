@@ -1,3 +1,4 @@
+"use client"
 // ToolbarPage.tsx
 import { Input } from "@/components/ui/input"
 import {
@@ -10,7 +11,7 @@ import {
 
 export default function ToolbarPage({ table, pageSize, setPageSize }: any) {
   return (
-    <div className="flex flex-wrap gap-4 items-center">
+    <div className="flex flex-wrap gap-2 items-center">
       {/* Search */}
       <Input
         placeholder="Buscar ticket..."

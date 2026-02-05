@@ -2,6 +2,7 @@ export type TicketStatus =
   | "open"
   | "in_progress"
   | "closed"
+  | "expired"
 
 export type TicketPriority =
   | "low"
