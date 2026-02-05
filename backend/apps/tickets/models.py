@@ -11,7 +11,8 @@ class Ticket(models.Model):
         ("in_progress", "En progreso"),
         ("closed", "Cerrado"),
         ("expired", "Expirado"),
-        
+        ("pending", "Pendiente"),
+        ("Resolved", "Resuelto"),
     )
 
     PRIORITY_CHOICES = (
