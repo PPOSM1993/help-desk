@@ -8,10 +8,12 @@ const map = {
   closed: "Cerrado",
 }
 
+
+
 export function TicketStatusBadge({ status }: { status: TicketStatus }) {
   return (
-    <Badge variant="secondary">
-      {map[status]}
+    <Badge variant="secondary" className="rounded-none">
+      {map[status].toLocaleUpperCase()}
     </Badge>
   )
 }

@@ -1,3 +1,4 @@
+"use client"
 // ToolbarPage.tsx
 import { Input } from "@/components/ui/input"
 import {
@@ -10,13 +11,13 @@ import {
 
 export default function ToolbarPage({ table, pageSize, setPageSize }: any) {
   return (
-    <div className="flex flex-wrap gap-4 items-center">
+    <div className="flex flex-wrap gap-2 items-center">
       {/* Search */}
       <Input
         placeholder="Buscar ticket..."
         value={(table.getState().globalFilter as string) ?? ""}
         onChange={e => table.setGlobalFilter(e.target.value)}
-        className="w-64"
+      className="w-80 rounded-none border-sm focus:ring-0 focus:border-primary-500 focus:outline-none"
       />
 
       {/* Estado */}
@@ -27,13 +28,15 @@ export default function ToolbarPage({ table, pageSize, setPageSize }: any) {
           )
         }
       >
-        <SelectTrigger className="w-40">
+        <SelectTrigger className="w-40 rounded-none border-sm focus:ring-0 focus:border-primary-500 focus:outline-none">
           <SelectValue placeholder="Estado" />
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="all">Todos</SelectItem>
           <SelectItem value="open">Abierto</SelectItem>
           <SelectItem value="closed">Cerrado</SelectItem>
+          <SelectItem value="in_progress">En Progreso</SelectItem>
+          <SelectItem value="expired">Expirado</SelectItem>
         </SelectContent>
       </Select>
 
@@ -45,7 +48,7 @@ export default function ToolbarPage({ table, pageSize, setPageSize }: any) {
           )
         }
       >
-        <SelectTrigger className="w-40">
+        <SelectTrigger className="w-40 rounded-none border-sm focus:ring-0 focus:border-primary-500 focus:outline-none">
           <SelectValue placeholder="Prioridad" />
         </SelectTrigger>
         <SelectContent>
@@ -53,12 +56,13 @@ export default function ToolbarPage({ table, pageSize, setPageSize }: any) {
           <SelectItem value="low">Baja</SelectItem>
           <SelectItem value="medium">Media</SelectItem>
           <SelectItem value="high">Alta</SelectItem>
+          <SelectItem value="urgent">Urgente</SelectItem>
         </SelectContent>
       </Select>
 
       {/* Page size */}
       <Select onValueChange={v => setPageSize(Number(v))}>
-        <SelectTrigger className="w-32">
+        <SelectTrigger className="w-32 rounded-none border-sm focus:ring-0 focus:border-primary-500 focus:outline-none">
           <SelectValue placeholder="Filas" />
         </SelectTrigger>
         <SelectContent>
