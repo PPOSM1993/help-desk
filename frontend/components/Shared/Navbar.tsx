@@ -17,6 +17,9 @@ import {
   AvatarImage
 } from "@/components/ui/avatar"
 
+import { logout } from "@/lib/auth.server"
+
+
 type Props = {
   onMenuClick?: () => void
 }
@@ -67,7 +70,9 @@ export function Navbar({ onMenuClick }: Props) {
               </AvatarFallback>
             </Avatar>
           </Button>
-          <Button variant="ghost" size="icon">
+          <Button variant="ghost" size="icon"
+            onClick={() => logout()}
+          >
             <LogOut className="h-5 w-5" />
           </Button>
         </div>
