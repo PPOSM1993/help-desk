@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'apps.tickets',
     "rest_framework_simplejwt",
     "drf_spectacular",
+    'rest_framework_simplejwt.token_blacklist',
+
 ]
 
 MIDDLEWARE = [
@@ -178,3 +180,4 @@ SIMPLE_JWT = {
     "BLACKLIST_AFTER_ROTATION": True,
     "AUTH_HEADER_TYPES": ("Bearer",),
 }
+

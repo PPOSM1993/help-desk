@@ -13,10 +13,10 @@ class TicketViewSet(viewsets.ModelViewSet):
 
         # Admin / staff ve todo
         if user.is_staff:
-            return Ticket.objects.all().order_by("-created_at")
+            return Ticket.objects.all().order_by("created_at")
 
         # Usuario normal ve solo sus tickets
-        return Ticket.objects.filter(created_by=user).order_by("-created_at")
+        return Ticket.objects.filter(created_by=user).order_by("created_at")
 
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)
