@@ -24,11 +24,14 @@ import { columns } from "./TicketColumns"
 import { Ticket } from "../types/ticket"
 import { ArrowBigLeft, Plus } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { CreateTicketModal } from "./CreateTicketModal"
 
 
 export function TicketTable({ data }: { data: Ticket[] }) {
   const [globalFilter, setGlobalFilter] = useState("")
   const [pageSize, setPageSize] = useState(10)
+  const [openCreate, setOpenCreate] = useState(false)
+
 
   const table = useReactTable({
     data,
@@ -50,12 +53,14 @@ export function TicketTable({ data }: { data: Ticket[] }) {
     return <TicketEmptyState />
   }
 
+
+
   return (
     <div className="space-y-4">
       {/* Toolbar va aquí */}
       <ToolbarPage table={table} pageSize={pageSize} setPageSize={setPageSize} />
 
-      <div className="rounded-md border rounded-none shadow-sm">
+      <div className="rounded-sm border shadowxsm overflow-x-auto">
         <Table>
           <TableHeader className="bg-blue-400 hover:bg-blue-400">
             {table.getHeaderGroups().map(headerGroup => (
@@ -92,17 +97,23 @@ export function TicketTable({ data }: { data: Ticket[] }) {
       {/* Pagination */}
       <div className="flex items-center gap-2">
         <Button
-          className="h-8 w-40 rounded-none p-0 bg-green-600 border-md border-none hover:bg-green-600 text-white uppercase"
+          className="h-8 w-34 rounded-sm bg-green-600 hover:bg-green-600 text-white uppercase cursor-pointer bg:text-white"
+          onClick={() => setOpenCreate(true)}
         >
-          <Plus className=" h-2 w-2" />
+          <Plus className="h-2 w-2" />
           Crear ticket
         </Button>
 
+        <CreateTicketModal
+          open={openCreate}
+          onClose={() => setOpenCreate(false)}
+        />
+
         <Button
           variant="outline"
-          className="h-8 rounded-none bg-red-500 border-md border-none hover:bg-red-500 text-white uppercase"
+          className="h-8 rounded-xs bg-red-500 border-md border-none hover:bg-red-500 text-white uppercase cursor-pointer bg:text-white"
         >
-          <ArrowBigLeft className="mr-2 h-4 w-4" />
+          <ArrowBigLeft className="h-4 w-4" />
           Cancelar
         </Button>
         <div className="flex items-center gap-2 justify-end flex-1">
