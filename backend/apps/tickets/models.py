@@ -43,6 +43,8 @@ class Ticket(models.Model):
         on_delete=models.CASCADE,
     )
 
+    modified_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name="modified_tickets")
+
     assigned_to = models.ForeignKey(
         User,
         related_name="tickets_assigned",
@@ -50,6 +52,7 @@ class Ticket(models.Model):
         null=True,
         blank=True,
     )
+
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
