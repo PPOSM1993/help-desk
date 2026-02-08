@@ -5,13 +5,13 @@ from .permissions import IsOwnerOrAgent
 
 
 class TicketViewSet(viewsets.ModelViewSet):
+    queryset = Ticket.objects.filter(is_active=True)
     serializer_class = TicketSerializer
     permission_classes = [permissions.IsAuthenticated, IsOwnerOrAgent]
 
     def get_queryset(self):
         user = self.request.user
 
-        queryset = Ticket.objects.filter(is_active=True)
 
         # Admin / staff ve todo
         if user.is_staff:
@@ -27,6 +27,7 @@ class TicketViewSet(viewsets.ModelViewSet):
         serializer.save(modified_by=self.request.user)
 
     def perform_destroy(self, instance):
+        print("🔥 Eliminando ticket", instance.id)
         instance.is_active = False
         instance.modified_by = self.request.user
         instance.save()

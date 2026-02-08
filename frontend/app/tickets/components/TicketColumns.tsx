@@ -1,8 +1,9 @@
 import { ColumnDef } from "@tanstack/react-table"
-import { Ticket } from "../types"
 import { TicketStatusBadge } from "./TicketStatusBadge"
 import { TicketPriorityBadge } from "./TicketPriorityBadge"
 import { TicketActions } from "./TicketActions"
+import { deleteTicket } from "../services/tickets.server"
+import { Ticket } from "../types/ticket"
 
 
 export const columns: ColumnDef<Ticket>[] = [

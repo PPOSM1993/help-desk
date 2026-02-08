@@ -114,7 +114,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Internationalization
+# Internationalizatio
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
 LANGUAGE_CODE = "en-us"
@@ -127,6 +127,7 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
+from datetime import timedelta
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = "static/"
@@ -157,6 +158,9 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
 ]
 
+CORS_ALLOW_CREDENTIALS = True
+
+
 CORS_ALLOW_METHODS = [
     "GET",
     "POST",
@@ -171,7 +175,8 @@ CORS_ALLOW_HEADERS = [
     "content-type",
 ]
 
-from datetime import timedelta
+SESSION_COOKIE_SAMESITE = "None"
+CSRF_COOKIE_SAMESITE = "None"
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(hours=24),
