@@ -48,3 +48,28 @@ export async function createTicket(payload: any) {
 
   return res.json()
 }
+
+export async function deleteTicket(ticketId: number) {
+  const token = await getAccessToken()
+
+  if (!token) {
+    throw new Error("No autenticado")
+  }
+
+  const res = await fetch(`${API_URL}/api/tickets/${ticketId}/`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+
+  if (!res.ok) {
+    const text = await res.text()
+    console.error("STATUS:", res.status)
+    console.error("BODY:", text)
+    throw new Error("Error al eliminar ticket")
+  }
+
+  // DRF responde 204 No Content
+  return true
+}
