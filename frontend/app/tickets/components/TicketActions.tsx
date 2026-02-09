@@ -2,9 +2,22 @@
 
 import { Ticket } from "../types/ticket"
 import { Button } from "@/components/ui/button"
-import { Pencil, Trash2Icon } from "lucide-react"
+import { Pencil, Trash, Trash2Icon } from "lucide-react"
 import { deleteTicket } from "../services/tickets.server"
 import { useRouter } from "next/navigation"
+
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+import React from "react"
 
 type Props = {
   ticket: Ticket
@@ -12,12 +25,20 @@ type Props = {
 
 export function TicketActions({ ticket }: Props) {
 
-  const router = useRouter()
+  const router = useRouter();
+  const [loading, setIsLoading] = React.useState(false)
 
   const handleDelete = async () => {
-    await deleteTicket(ticket.id)
+    try {
+          await deleteTicket(ticket.id)
     router.refresh()
     console.log("Deleted ticket", ticket.id)
+    } catch (error) {
+      console.error("❌ Error al eliminar ticket:", error)
+      alert("Error al eliminar el ticket. Por favor, inténtalo de nuevo.")
+    } finally {
+      setIsLoading(false)
+    }
   }
 
 
@@ -27,14 +48,39 @@ export function TicketActions({ ticket }: Props) {
         <Pencil className="h-4 w-4 text-white" />
       </Button>
 
-      <Button
-        variant="ghost"
-        size="icon"
-        className="bg-red-500 hover:bg-red-600"
-        onClick={handleDelete}
->
-        <Trash2Icon className="h-4 w-4 text-white" />
-      </Button>
+    <AlertDialog>
+      <AlertDialogTrigger asChild>
+        <Button variant="destructive" size="icon" className="bg-red-500 hover:bg-red-600 cursor-pointer">
+          <Trash className="h-4 w-4" />
+        </Button>
+      </AlertDialogTrigger>
+
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>
+            ¿Eliminar ticket?
+          </AlertDialogTitle>
+          <AlertDialogDescription>
+            Esta acción no se puede deshacer. 
+            El ticket será eliminado permanentemente.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+
+        <AlertDialogFooter>
+          <AlertDialogCancel disabled={loading}>
+            Cancelar
+          </AlertDialogCancel>
+
+          <AlertDialogAction
+            onClick={handleDelete}
+            disabled={loading}
+            className="bg-red-600 hover:bg-red-500 hover:bg-red-600 cursor-pointer text-white"
+          >
+            {loading ? "Eliminando..." : "Eliminar"}
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
     </div>
   )
 }

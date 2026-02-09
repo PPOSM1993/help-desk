@@ -138,4 +138,4 @@ export function TicketTable({ data }: { data: Ticket[] }) {
       </div>
     </div>
   )
-} 
+}
