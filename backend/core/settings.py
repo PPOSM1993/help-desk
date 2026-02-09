@@ -143,6 +143,7 @@ AUTH_USER_MODEL = "authentication.User"
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
+        "rest_framework.authentication.SessionAuthentication", # admin
     ),
     #"DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }

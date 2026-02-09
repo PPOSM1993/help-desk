@@ -27,7 +27,7 @@ import { Button } from "@/components/ui/button"
 import { CreateTicketModal } from "./CreateTicketModal"
 
 
-export function TicketTable({ data }: { data: Ticket[] }) {
+export function TicketTable({ data = [] }: { data: Ticket[] }) {
   const [globalFilter, setGlobalFilter] = useState("")
   const [pageSize, setPageSize] = useState(10)
   const [openCreate, setOpenCreate] = useState(false)
@@ -48,10 +48,9 @@ export function TicketTable({ data }: { data: Ticket[] }) {
 
   })
 
+  console.log("data:", data)
+  console.log("rows:", table.getRowModel().rows)
 
-  if (!data.length) {
-    return <TicketEmptyState />
-  }
 
 
 
@@ -78,19 +77,31 @@ export function TicketTable({ data }: { data: Ticket[] }) {
           </TableHeader>
 
           <TableBody className="bg-blue-200 hover:bg-blue-200">
-            {table.getRowModel().rows.map(row => (
-              <TableRow key={row.id} className="bg-blue-300 hover:bg-blue-300">
-                {row.getVisibleCells().map(cell => (
-                  <TableCell key={cell.id}>
-                    {flexRender(
-                      cell.column.columnDef.cell,
-                      cell.getContext()
-                    )}
-                  </TableCell>
-                ))}
+            {table.getRowModel().rows.length ? (
+              table.getRowModel().rows.map(row => (
+                <TableRow key={row.id} className="bg-blue-300 hover:bg-blue-300">
+                  {row.getVisibleCells().map(cell => (
+                    <TableCell key={cell.id}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center text-muted-foreground"
+                >
+                  No hay tickets registrados 🎉
+                </TableCell>
               </TableRow>
-            ))}
+            )}
           </TableBody>
+
         </Table>
       </div>
 
