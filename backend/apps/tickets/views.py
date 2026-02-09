@@ -12,13 +12,13 @@ class TicketViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         user = self.request.user
 
+        base_qs = Ticket.objects.filter(is_active=True)
 
-        # Admin / staff ve todo
         if user.is_staff:
-            return Ticket.objects.all().order_by("created_at")
+            return base_qs.order_by("created_at")
 
-        # Usuario normal ve solo sus tickets
-        return Ticket.objects.filter(created_by=user).order_by("created_at")
+        return base_qs.filter(created_by=user).order_by("created_at")
+
 
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)
@@ -31,3 +31,4 @@ class TicketViewSet(viewsets.ModelViewSet):
         instance.is_active = False
         instance.modified_by = self.request.user
         instance.save()
+
