@@ -9,7 +9,10 @@ import { Ticket } from "../types/ticket"
 export const columns: ColumnDef<Ticket>[] = [
   {
     accessorKey: "id",
-    header: "ID",
+    header: "Nº",
+    cell: ({ row }) =>  {
+      return row.index + 1
+    }
   },
   {
     accessorKey: "title",
