@@ -3,7 +3,7 @@
 import { Ticket } from "../types/ticket"
 import { Button } from "@/components/ui/button"
 import { Pencil, Trash, Trash2Icon } from "lucide-react"
-import { deleteTicket } from "../services/tickets.server"
+import { deleteTicket, updateTicket } from "../services/tickets.server"
 import { useRouter } from "next/navigation"
 
 import {
@@ -41,10 +41,26 @@ export function TicketActions({ ticket }: Props) {
     }
   }
 
+  const handleUpdate = async () => {
+    try {
+      await updateTicket(ticket.id, {
+        title: ticket.title,
+        description: ticket.description,
+        priority: ticket.priority,
+      })
+      console.log("✅ Ticket actualizado correctamente")
+    } catch (error) {
+      console.error("❌ Error al actualizar ticket:", error)
+      alert("Error al actualizar el ticket. Por favor, inténtalo de nuevo.")
+    }
+  }
+
 
   return (
     <div className="flex gap-2">
-      <Button variant="ghost" size="icon" className="bg-yellow-500 hover:bg-yellow-600">
+      <Button variant="ghost" size="icon" className="bg-yellow-500 hover:bg-yellow-600 cursor-pointer text-white"
+      onClick={handleUpdate}
+      >
         <Pencil className="h-4 w-4 text-white" />
       </Button>
 

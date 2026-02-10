@@ -17,7 +17,7 @@ export default function ToolbarPage({ table, pageSize, setPageSize }: any) {
         placeholder="Buscar ticket..."
         value={(table.getState().globalFilter as string) ?? ""}
         onChange={e => table.setGlobalFilter(e.target.value)}
-      className="w-80 rounded-none border-sm focus:ring-0 focus:border-primary-500 focus:outline-none"
+      className="w-80 rounded-md border-sm focus:ring-0 focus:border-primary-500 focus:outline-none"
       />
 
       {/* Estado */}
@@ -28,7 +28,7 @@ export default function ToolbarPage({ table, pageSize, setPageSize }: any) {
           )
         }
       >
-        <SelectTrigger className="w-40 rounded-none border-sm focus:ring-0 focus:border-primary-500 focus:outline-none">
+        <SelectTrigger className="w-40 rounded-md border-sm focus:ring-0 focus:border-primary-500 focus:outline-none">
           <SelectValue placeholder="Estado" />
         </SelectTrigger>
         <SelectContent>
@@ -50,7 +50,7 @@ export default function ToolbarPage({ table, pageSize, setPageSize }: any) {
           )
         }
       >
-        <SelectTrigger className="w-40 rounded-none border-sm focus:ring-0 focus:border-primary-500 focus:outline-none">
+        <SelectTrigger className="w-40 rounded-md border-sm focus:ring-0 focus:border-primary-500 focus:outline-none">
           <SelectValue placeholder="Prioridad" />
         </SelectTrigger>
         <SelectContent>
@@ -64,7 +64,7 @@ export default function ToolbarPage({ table, pageSize, setPageSize }: any) {
 
       {/* Page size */}
       <Select onValueChange={v => setPageSize(Number(v))}>
-        <SelectTrigger className="w-32 rounded-none border-sm focus:ring-0 focus:border-primary-500 focus:outline-none">
+        <SelectTrigger className="w-32 rounded-md border-sm focus:ring-0 focus:border-primary-500 focus:outline-none">
           <SelectValue placeholder="Filas" />
         </SelectTrigger>
         <SelectContent>
