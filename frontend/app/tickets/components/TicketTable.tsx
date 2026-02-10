@@ -24,12 +24,17 @@ import { Ticket } from "../types/ticket"
 import { ArrowBigLeft, Plus } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { CreateTicketModal } from "./CreateTicketModal"
+import { useRouter } from "next/navigation"
 
 
 export function TicketTable({ data = [] }: { data: Ticket[] }) {
   const [globalFilter, setGlobalFilter] = useState("")
-  const [pageSize, setPageSize] = useState(10)
+  const [pageSize, setPageSize] = useState(5)
   const [openCreate, setOpenCreate] = useState(false)
+  const [pageIndex, setPageIndex] = useState(0)
+
+
+  const router = useRouter()
 
 
   const table = useReactTable({
@@ -37,22 +42,37 @@ export function TicketTable({ data = [] }: { data: Ticket[] }) {
     columns,
     state: {
       globalFilter,
-      pagination: { pageSize, pageIndex: 0 },
+      pagination: {
+        pageSize,
+        pageIndex,
+      },
     },
     onGlobalFilterChange: setGlobalFilter,
+    onPaginationChange: updater => {
+      const next =
+        typeof updater === "function"
+          ? updater({ pageIndex, pageSize })
+          : updater
+
+      setPageIndex(next.pageIndex)
+      setPageSize(next.pageSize)
+    },
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-    getExpandedRowModel: getExpandedRowModel()
-
+    getExpandedRowModel: getExpandedRowModel(),
+    autoResetPageIndex: false,
   })
+  const handleCancel = () => {
+    router.push('dashboard')
+  }
 
   return (
     <div className="space-y-4">
       {/* Toolbar va aquí */}
       <ToolbarPage table={table} pageSize={pageSize} setPageSize={setPageSize} />
 
-      <div className="rounded-sm border shadowxsm overflow-x-auto">
+      <div className="rounded-md border shadowxsm overflow-x-auto">
         <Table>
           <TableHeader className="bg-blue-400 hover:bg-blue-400">
             {table.getHeaderGroups().map(headerGroup => (
@@ -69,10 +89,10 @@ export function TicketTable({ data = [] }: { data: Ticket[] }) {
             ))}
           </TableHeader>
 
-          <TableBody className="bg-blue-200 hover:bg-blue-200">
+          <TableBody className="bg-blue-200 hover:bg-blue-200 rounded-md">
             {table.getRowModel().rows.length ? (
               table.getRowModel().rows.map(row => (
-                <TableRow key={row.id} className="bg-blue-300 hover:bg-blue-300">
+                <TableRow key={row.id} className="bg-blue-300 hover:bg-blue-300 rounded-md">
                   {row.getVisibleCells().map(cell => (
                     <TableCell key={cell.id}>
                       {flexRender(
@@ -115,7 +135,8 @@ export function TicketTable({ data = [] }: { data: Ticket[] }) {
 
         <Button
           variant="outline"
-          className="h-8 rounded-xs bg-red-500 border-md border-none hover:bg-red-500 text-white uppercase cursor-pointer bg:text-white"
+          className="h-8 rounded-md bg-red-500 border-md border-none hover:bg-red-500 text-white uppercase cursor-pointer bg:text-white"
+          onClick={handleCancel}
         >
           <ArrowBigLeft className="h-4 w-4" />
           Cancelar
@@ -130,11 +151,17 @@ export function TicketTable({ data = [] }: { data: Ticket[] }) {
                 key={index}
                 size="sm"
                 variant={isActive ? "default" : "outline"}
-                className="h-8 w-8 rounded-none p-0 bg-green-600 border-md border-gray-500 hover:bg-green-600 text-white"
-                onClick={() => table.setPageIndex(index)}
+                className="h-8 w-8 rounded-xs p-0 bg-green-600 border-md border-gray-500 hover:bg-green-600 text-white cursor-pointer bg:text-white"
+                onClick={() =>
+                  table.setPagination({
+                    pageIndex: index,
+                    pageSize,
+                  })
+                }
               >
                 {index + 1}
               </Button>
+
             )
           })}
         </div>

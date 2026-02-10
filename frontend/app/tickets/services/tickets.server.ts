@@ -73,3 +73,30 @@ export async function deleteTicket(ticketId: number) {
   // DRF responde 204 No Content
   return true
 }
+
+export async function updateTicket(ticketId: number, payload: any) {
+  console.log("PAYLOAD:", payload)
+  const token = await getAccessToken()
+
+  if (!token) {
+    throw new Error("No autenticado")
+  }
+
+  const res = await fetch(`${API_URL}/api/tickets/${ticketId}/`, {
+    method: "PATCH",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  })
+
+  if (!res.ok) {
+    const text = await res.text()
+    console.error("STATUS:", res.status)
+    console.error("BODY:", text)
+    throw new Error("Error al actualizar ticket")
+  }
+
+  return res.json()
+}

@@ -42,7 +42,7 @@ export function CreateTicketForm({ onSuccess }: Props) {
       onSuccess()
       router.refresh()
     } catch (error) {
-      console.error("❌ Error creando ticket:", error)
+      
       toast.error("Error creando ticket")
     } finally {
       setLoading(false)
