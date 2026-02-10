@@ -61,13 +61,13 @@ export function TicketActions({ ticket }: Props) {
             ¿Eliminar ticket?
           </AlertDialogTitle>
           <AlertDialogDescription>
-            Esta acción no se puede deshacer. 
-            El ticket será eliminado permanentemente.
+            Esta acción no se puede deshacer.
+            El Ticket será eliminado permanentemente.
           </AlertDialogDescription>
         </AlertDialogHeader>
 
         <AlertDialogFooter>
-          <AlertDialogCancel disabled={loading}>
+ as        <AlertDialogCancel disabled={loading}>
             Cancelar
           </AlertDialogCancel>
 
