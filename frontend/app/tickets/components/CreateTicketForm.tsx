@@ -14,6 +14,8 @@ import {
 import { Label } from "@/components/ui/label"
 import { Plus } from "lucide-react"
 import { createTicket } from "../services/tickets.server"
+import { useRouter } from "next/navigation"
+import { toast } from "sonner"
 
 type Props = {
   onSuccess: () => void
@@ -24,6 +26,7 @@ export function CreateTicketForm({ onSuccess }: Props) {
   const [description, setDescription] = useState("")
   const [priority, setPriority] = useState("medium")
   const [loading, setLoading] = useState(false)
+  const router = useRouter()
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -36,10 +39,11 @@ export function CreateTicketForm({ onSuccess }: Props) {
         priority,
       })
 
-      console.log("✅ Ticket creado correctamente")
       onSuccess()
+      router.refresh()
     } catch (error) {
       console.error("❌ Error creando ticket:", error)
+      toast.error("Error creando ticket")
     } finally {
       setLoading(false)
     }

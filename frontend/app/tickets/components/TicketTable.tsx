@@ -18,7 +18,6 @@ import {
 } from "@/components/ui/table"
 
 import { useState } from "react"
-import { TicketEmptyState } from "./TicketEmptyState"
 import ToolbarPage from "./ToolbarPage"
 import { columns } from "./TicketColumns"
 import { Ticket } from "../types/ticket"
@@ -47,12 +46,6 @@ export function TicketTable({ data = [] }: { data: Ticket[] }) {
     getExpandedRowModel: getExpandedRowModel()
 
   })
-
-  console.log("data:", data)
-  console.log("rows:", table.getRowModel().rows)
-
-
-
 
   return (
     <div className="space-y-4">
@@ -96,7 +89,7 @@ export function TicketTable({ data = [] }: { data: Ticket[] }) {
                   colSpan={columns.length}
                   className="h-24 text-center text-muted-foreground"
                 >
-                  No hay tickets registrados 🎉
+                  No hay Tickets Registrados
                 </TableCell>
               </TableRow>
             )}
