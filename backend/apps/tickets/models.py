@@ -1,3 +1,4 @@
+from datetime import timezone
 from django.db import models
 from django.conf import settings
 
@@ -39,9 +40,15 @@ class Ticket(models.Model):
 
     created_by = models.ForeignKey(
         User,
-        related_name="tickets_created",
+    related_name="tickets_created",
         on_delete=models.CASCADE,
     )
+
+    first_response_at = models.DateTimeField(null=True, blank=True)
+    resolved_at = models.DateTimeField(null=True, blank=True)
+
+    sla_response_deadline = models.DateTimeField(null=True, blank=True)
+    sla_resolution_deadline = models.DateTimeField(null=True, blank=True)
 
     modified_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name="modified_tickets")
 
@@ -59,5 +66,24 @@ class Ticket(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    @property
+    def response_sla_status(self):
+        if not self.first_response_at:
+            if timezone.now() > self.sla_response_deadline:
+                return "breached"
+            return "pending"
+        return "met"
+
+
+    @property
+    def resolution_sla_status(self):
+        if not self.resolved_at:
+            if timezone.now() > self.sla_resolution_deadline:
+                return "breached"
+            return "pending"
+        return "met"
+
+
     def __str__(self):
         return f"#{self.id} - {self.title}"
+
