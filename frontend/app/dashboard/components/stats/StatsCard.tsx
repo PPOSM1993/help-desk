@@ -43,8 +43,10 @@ export function StatCard({
 
       {/* Footer */}
       <div className="bg-black/10 px-4 py-2 text-sm flex items-center justify-center gap-1 hover:bg-black/20 transition">
-        Más info
-        <span>→</span>
+        <a href="">
+          Mas Info<span> →</span>
+
+        </a>
       </div>
     </Card>
   )
