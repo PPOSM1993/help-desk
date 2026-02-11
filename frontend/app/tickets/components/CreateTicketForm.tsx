@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -13,41 +13,63 @@ import {
 } from "@/components/ui/select"
 import { Label } from "@/components/ui/label"
 import { Plus } from "lucide-react"
-import { createTicket } from "../services/tickets.server"
+import { createTicket, updateTicket } from "../services/tickets.server"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
+import { Ticket } from "../types/ticket"
 
 type Props = {
   onSuccess: () => void
+  ticket?: Ticket | null
 }
 
-export function CreateTicketForm({ onSuccess }: Props) {
-  const [title, setTitle] = useState("")
-  const [description, setDescription] = useState("")
-  const [priority, setPriority] = useState("medium")
+export function CreateTicketForm({ onSuccess, ticket }: Props) {
+  const [title, setTitle] = useState(ticket ? ticket.title : "")
+  const [description, setDescription] = useState(ticket ? ticket.description : "")
+  const [priority, setPriority] = useState(ticket ? ticket.priority : "medium")
   const [loading, setLoading] = useState(false)
   const router = useRouter()
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault()
-    setLoading(true)
-
-    try {
-      await createTicket({
-        title,
-        description,
-        priority,
-      })
-
-      onSuccess()
-      router.refresh()
-    } catch (error) {
-      
-      toast.error("Error creando ticket")
-    } finally {
-      setLoading(false)
+  useEffect(() => {
+    if (ticket) {
+      setTitle(ticket.title)
+      setDescription(ticket.description)
+      setPriority(ticket.priority)
+    } else {
+      setTitle("")
+      setDescription("")
+      setPriority("medium")
     }
+  }, [ticket])
+
+async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  e.preventDefault()
+  setLoading(true)
+
+  try {
+    const payload = {
+      title,
+      description,
+      priority,
+    }
+
+    if (ticket) {
+      await updateTicket(ticket.id, payload)
+      toast.success("Ticket actualizado")
+    } else {
+      await createTicket(payload)
+      toast.success("Ticket creado")
+    }
+
+    onSuccess()
+    router.refresh()
+
+  } catch (error) {
+    toast.error("Error al guardar ticket")
+  } finally {
+    setLoading(false)
   }
+}
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">

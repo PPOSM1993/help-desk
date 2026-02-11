@@ -1,4 +1,5 @@
 "use client"
+
 import {
   flexRender,
   getCoreRowModel,
@@ -19,23 +20,29 @@ import {
 
 import { useState } from "react"
 import ToolbarPage from "./ToolbarPage"
-import { columns } from "./TicketColumns"
 import { Ticket } from "../types/ticket"
 import { ArrowBigLeft, Plus } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { CreateTicketModal } from "./CreateTicketModal"
 import { useRouter } from "next/navigation"
-
+import { getColumns } from "./TicketColumns"
 
 export function TicketTable({ data = [] }: { data: Ticket[] }) {
   const [globalFilter, setGlobalFilter] = useState("")
   const [pageSize, setPageSize] = useState(5)
-  const [openCreate, setOpenCreate] = useState(false)
   const [pageIndex, setPageIndex] = useState(0)
 
+  const [open, setOpen] = useState(false)
+  const [editingTicket, setEditingTicket] = useState<Ticket | null>(null)
 
   const router = useRouter()
 
+  const handleEdit = (ticket: Ticket) => {
+    setEditingTicket(ticket)
+    setOpen(true)
+  }
+
+  const columns = getColumns(handleEdit)
 
   const table = useReactTable({
     data,
@@ -63,20 +70,21 @@ export function TicketTable({ data = [] }: { data: Ticket[] }) {
     getExpandedRowModel: getExpandedRowModel(),
     autoResetPageIndex: false,
   })
+
   const handleCancel = () => {
-    router.push('dashboard')
+    router.push("dashboard")
   }
 
   return (
     <div className="space-y-4">
-      {/* Toolbar va aquí */}
+
       <ToolbarPage table={table} pageSize={pageSize} setPageSize={setPageSize} />
 
-      <div className="rounded-md border shadowxsm overflow-x-auto">
-        <Table>
-          <TableHeader className="bg-blue-400 hover:bg-blue-400">
+      <div className="rounded-md border overflow-x-auto">
+        <Table className="w-full">
+          <TableHeader>
             {table.getHeaderGroups().map(headerGroup => (
-              <TableRow key={headerGroup.id} className="bg-blue-400 hover:bg-blue-400">
+              <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map(header => (
                   <TableHead key={header.id}>
                     {flexRender(
@@ -89,10 +97,10 @@ export function TicketTable({ data = [] }: { data: Ticket[] }) {
             ))}
           </TableHeader>
 
-          <TableBody className="bg-blue-200 hover:bg-blue-200 rounded-md">
+          <TableBody>
             {table.getRowModel().rows.length ? (
               table.getRowModel().rows.map(row => (
-                <TableRow key={row.id} className="bg-blue-300 hover:bg-blue-300 rounded-md">
+                <TableRow key={row.id}>
                   {row.getVisibleCells().map(cell => (
                     <TableCell key={cell.id}>
                       {flexRender(
@@ -114,44 +122,57 @@ export function TicketTable({ data = [] }: { data: Ticket[] }) {
               </TableRow>
             )}
           </TableBody>
-
         </Table>
       </div>
 
-      {/* Pagination */}
+      {/* 🔥 BOTONES + PAGINACIÓN */}
       <div className="flex items-center gap-2">
+
+        {/* 🟢 CREAR */}
         <Button
-          className="h-8 w-34 rounded-sm bg-green-600 hover:bg-green-600 text-white uppercase cursor-pointer bg:text-white"
-          onClick={() => setOpenCreate(true)}
+          className="bg-green-600 hover:bg-green-700 text-white"
+          onClick={() => {
+            setEditingTicket(null)
+            setOpen(true)
+          }}
         >
-          <Plus className="h-2 w-2" />
+          <Plus className="h-4 w-4 mr-2" />
           Crear ticket
         </Button>
 
-        <CreateTicketModal
-          open={openCreate}
-          onClose={() => setOpenCreate(false)}
-        />
-
+        {/* 🔴 CANCELAR */}
         <Button
-          variant="outline"
-          className="h-8 rounded-md bg-red-500 border-md border-none hover:bg-red-500 text-white uppercase cursor-pointer bg:text-white"
+          className="bg-red-500 hover:bg-red-600 text-white"
           onClick={handleCancel}
         >
-          <ArrowBigLeft className="h-4 w-4" />
+          <ArrowBigLeft className="h-4 w-4 mr-2" />
           Cancelar
         </Button>
-        <div className="flex items-center gap-2 justify-end flex-1">
+
+        {/* 🔥 PAGINACIÓN */}
+        <div className="flex items-center gap-2 ml-auto">
+
+          {/* Botón anterior */}
+          <Button
+            size="sm"
+            variant="outline"
+            disabled={!table.getCanPreviousPage()}
+            onClick={() => table.previousPage()}
+
+          >
+            {"<"}
+          </Button>
+
+          {/* Números */}
           {Array.from({ length: table.getPageCount() }).map((_, index) => {
             const isActive = table.getState().pagination.pageIndex === index
 
             return (
-
               <Button
                 key={index}
                 size="sm"
+                className="bg-green-600 hover:bg-green-500 text-white hover:text-white"
                 variant={isActive ? "default" : "outline"}
-                className="h-8 w-8 rounded-xs p-0 bg-green-600 border-md border-gray-500 hover:bg-green-600 text-white cursor-pointer bg:text-white"
                 onClick={() =>
                   table.setPagination({
                     pageIndex: index,
@@ -161,12 +182,28 @@ export function TicketTable({ data = [] }: { data: Ticket[] }) {
               >
                 {index + 1}
               </Button>
-
             )
           })}
-        </div>
 
+          {/* Botón siguiente */}
+          <Button
+            size="sm"
+            variant="outline"
+            disabled={!table.getCanNextPage()}
+            onClick={() => table.nextPage()}
+          >
+            {">"}
+          </Button>
+
+        </div>
       </div>
+
+      {/* 🔥 MODAL ÚNICO */}
+      <CreateTicketModal
+        open={open}
+        setOpen={setOpen}
+        ticket={editingTicket}
+      />
     </div>
   )
 }
