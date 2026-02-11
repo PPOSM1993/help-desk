@@ -52,7 +52,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     role = models.CharField(
         max_length=20,
         choices=ROLE_CHOICES,
-        default='client'
+        default='admin'
     )
     email = models.EmailField(unique=True)
     username = models.CharField(max_length=150, unique=True)
