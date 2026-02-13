@@ -52,7 +52,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     role = models.CharField(
         max_length=20,
         choices=ROLE_CHOICES,
-        default='admin'
+        default='client'
     )
     email = models.EmailField(unique=True)
     username = models.CharField(max_length=150, unique=True)
@@ -80,3 +80,8 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.username
+
+    def save(self, *args, **kwargs):
+        if self.is_superuser:
+            self.role = "admin"
+        super().save(*args, **kwargs)
