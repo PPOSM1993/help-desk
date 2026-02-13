@@ -143,7 +143,7 @@ AUTH_USER_MODEL = "authentication.User"
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
-        "rest_framework.authentication.SessionAuthentication", # admin
+        #"rest_framework.authentication.SessionAuthentication", # admin
     ),
     #"DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
@@ -154,6 +154,12 @@ SPECTACULAR_SETTINGS = {
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
 }
+
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:8000",
+    "http://127.0.0.1:8000",
+]
+
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
@@ -176,8 +182,12 @@ CORS_ALLOW_HEADERS = [
     "content-type",
 ]
 
-SESSION_COOKIE_SAMESITE = "None"
-CSRF_COOKIE_SAMESITE = "None"
+#SESSION_COOKIE_SAMESITE = "None"
+#CSRF_COOKIE_SAMESITE = "None"
+
+CSRF_COOKIE_SECURE = False
+SESSION_COOKIE_SECURE = False
+
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(hours=24),

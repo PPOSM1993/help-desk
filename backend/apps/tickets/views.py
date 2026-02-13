@@ -1,5 +1,6 @@
 from rest_framework import viewsets, permissions
 from rest_framework.exceptions import PermissionDenied
+from rest_framework.permissions import IsAuthenticated
 from .models import Ticket
 from .serializers import TicketSerializer
 from .permissions import *
@@ -36,8 +37,10 @@ class TicketViewSet(viewsets.ModelViewSet):
         if self.action in ["update", "partial_update"]:
             if self.request.user.role not in ["admin", "support"]:
                 raise PermissionDenied("No tienes permiso para modificar tickets")
+        else:
+            permissions_classes = [IsAuthenticated]
 
-        return [permissions.IsAuthenticated()]
+        return [permissions() for permissions in self.permission_classes]
 
     # 🆕 Crear
     def perform_create(self, serializer):
