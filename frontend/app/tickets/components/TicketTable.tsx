@@ -81,8 +81,8 @@ export function TicketTable({ data = [] }: { data: Ticket[] }) {
       <ToolbarPage table={table} pageSize={pageSize} setPageSize={setPageSize} />
 
       <div className="rounded-md border overflow-x-auto">
-        <Table className="w-full">
-          <TableHeader>
+        <Table className="w-full table-auto bg-blue-500 hover:bg-blue-500">
+          <TableHeader className="bg-blue-500 hover:bg-blue-500">
             {table.getHeaderGroups().map(headerGroup => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map(header => (
@@ -97,7 +97,7 @@ export function TicketTable({ data = [] }: { data: Ticket[] }) {
             ))}
           </TableHeader>
 
-          <TableBody>
+          <TableBody className="bg-blue-300 hover:bg-blue-300">
             {table.getRowModel().rows.length ? (
               table.getRowModel().rows.map(row => (
                 <TableRow key={row.id}>
@@ -130,7 +130,7 @@ export function TicketTable({ data = [] }: { data: Ticket[] }) {
 
         {/* 🟢 CREAR */}
         <Button
-          className="bg-green-600 hover:bg-green-700 text-white"
+          className="bg-green-600 hover:bg-green-700 text-white cursor-pointer"
           onClick={() => {
             setEditingTicket(null)
             setOpen(true)
@@ -142,7 +142,7 @@ export function TicketTable({ data = [] }: { data: Ticket[] }) {
 
         {/* 🔴 CANCELAR */}
         <Button
-          className="bg-red-500 hover:bg-red-600 text-white"
+          className="bg-red-500 hover:bg-red-600 text-white cursor-pointer"
           onClick={handleCancel}
         >
           <ArrowBigLeft className="h-4 w-4 mr-2" />
@@ -156,6 +156,7 @@ export function TicketTable({ data = [] }: { data: Ticket[] }) {
           <Button
             size="sm"
             variant="outline"
+            className="cursor-pointer"
             disabled={!table.getCanPreviousPage()}
             onClick={() => table.previousPage()}
 
@@ -171,7 +172,7 @@ export function TicketTable({ data = [] }: { data: Ticket[] }) {
               <Button
                 key={index}
                 size="sm"
-                className="bg-green-600 hover:bg-green-500 text-white hover:text-white"
+                className="bg-green-600 hover:bg-green-500 text-white hover:text-white cursor-pointer"
                 variant={isActive ? "default" : "outline"}
                 onClick={() =>
                   table.setPagination({
@@ -189,6 +190,7 @@ export function TicketTable({ data = [] }: { data: Ticket[] }) {
           <Button
             size="sm"
             variant="outline"
+            className="cursor-pointer"
             disabled={!table.getCanNextPage()}
             onClick={() => table.nextPage()}
           >

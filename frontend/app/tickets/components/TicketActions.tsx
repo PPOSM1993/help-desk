@@ -47,7 +47,7 @@ export function TicketActions({ ticket, onEdit }: Props) {
       {/* 🟡 EDITAR */}
       <Button
         size="icon"
-        className="bg-yellow-500 hover:bg-yellow-600 text-white"
+        className="bg-yellow-500 hover:bg-yellow-600 text-white cursor-pointer"
         onClick={() => onEdit(ticket)}
       >
         <Pencil className="h-4 w-4" />
@@ -58,7 +58,7 @@ export function TicketActions({ ticket, onEdit }: Props) {
         <AlertDialogTrigger asChild>
           <Button
             size="icon"
-            className="bg-red-500 hover:bg-red-600 text-white"
+            className="bg-red-500 hover:bg-red-600 text-white cursor-pointer"
           >
             <Trash className="h-4 w-4" />
           </Button>
