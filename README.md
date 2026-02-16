@@ -137,10 +137,3 @@ DATABASE_URL=postgres://user:password@localhost:5432/mesa_ayuda
 
 Este proyecto está abierto a mejoras y sugerencias.
 Pull requests y feedback son bienvenidos.
-
-
-
-
-
-
-
