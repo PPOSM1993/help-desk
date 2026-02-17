@@ -1,6 +1,10 @@
 import UsersTable from "./components/UsersTable";
+import { getUsers } from "./services/users.server";
 
-export default function UsersPage() {
+export default async function UsersPage() {
+
+    const users = await getUsers()
+
     return (
         <>
             <div className="space-y-6">
@@ -12,7 +16,7 @@ export default function UsersPage() {
                     </p>
                 </div>
                 {/* DATA TABLE: SIEMPRE */}
-                <UsersTable/>
+                <UsersTable users={users} />
             </div>
         </>
     )
