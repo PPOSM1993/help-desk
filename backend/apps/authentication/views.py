@@ -1,4 +1,4 @@
-from rest_framework import generics, status
+from rest_framework import generics, status, viewsets
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -13,6 +13,8 @@ from .permissions import IsOwner
 from .utils import send_confirmation_email
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.encoding import force_str
+from .permissions import IsBusinessAdmin
+from .serializers import AdminUserSerializer
 
 User = get_user_model()
 
@@ -158,3 +160,9 @@ class LogoutView(APIView):
                 {"error": "Token inválido"},
                 status=status.HTTP_400_BAD_REQUEST
             )
+
+
+class UserAdminViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all().order_by("-date_joined")
+    serializer_class = AdminUserSerializer
+    permission_classes = [IsBusinessAdmin]
