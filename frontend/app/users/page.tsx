@@ -1,4 +1,4 @@
-import UsersTable from "./components/UsersTable";
+import { UsersTable } from "./components/UsersTable";
 import { getUsers } from "./services/users.server";
 
 export default async function UsersPage() {
@@ -16,7 +16,7 @@ export default async function UsersPage() {
                     </p>
                 </div>
                 {/* DATA TABLE: SIEMPRE */}
-                <UsersTable users={users} />
+                <UsersTable data={users} />
             </div>
         </>
     )

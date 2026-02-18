@@ -1,45 +1,84 @@
 "use client"
 
+import {
+  flexRender,
+  getCoreRowModel,
+  getPaginationRowModel,
+  getFilteredRowModel,
+  useReactTable,
+  getExpandedRowModel,
+} from "@tanstack/react-table"
+
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
+
+import { useState } from "react"
+import { ArrowBigLeft, Plus } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { useRouter } from "next/navigation"
+import ToolbarPage from "@/app/tickets/components/ToolbarPage"
 import { User } from "../types/users"
+import CreateUserModal from "./CreateUserModal"
+import { getColumns } from "./UserClients"
+
+export function UsersTable({ data = [] }: { data: User[] }) {
+  const [globalFilter, setGlobalFilter] = useState("")
+  const [pageSize, setPageSize] = useState(5)
+  const [pageIndex, setPageIndex] = useState(0)
+
+  const [open, setOpen] = useState(false)
+  const [editingUser, setEditingUser] = useState<User | null>(null)
+
+  const router = useRouter()
 
 
-interface Props {
-  users: User[]
-}
-
-export default function UsersTable({ users }: Props) {
-  if (!users.length) {
-    return <p>No hay usuarios registrados.</p>
+  const handleEdit = (user: User) => {
+    setEditingUser(user)
+    setOpen(true)
   }
 
+  const columns = getColumns(handleEdit)
+
+
+  const table = useReactTable({
+    data,
+    columns,
+    state: {
+      globalFilter,
+      pagination: {
+        pageSize,
+        pageIndex,
+      },
+    },
+    onGlobalFilterChange: setGlobalFilter,
+    onPaginationChange: updater => {
+      const next =
+        typeof updater === "function"
+          ? updater({ pageIndex, pageSize })
+          : updater
+
+      setPageIndex(next.pageIndex)
+      setPageSize(next.pageSize)
+    },
+    getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getExpandedRowModel: getExpandedRowModel(),
+    autoResetPageIndex: false,
+  })
+
+
   return (
-    <div className="border rounded-lg overflow-hidden">
-      <table className="w-full text-sm">
-        <thead className="bg-muted">
-          <tr>
-            <th className="p-3 text-left">Username</th>
-            <th className="p-3 text-left">Email</th>
-            <th className="p-3 text-left">Rol</th>
-            <th className="p-3 text-left">Activo</th>
-            <th className="p-3 text-left">Fecha</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((user) => (
-            <tr key={user.id} className="border-t">
-              <td className="p-3">{user.username}</td>
-              <td className="p-3">{user.email}</td>
-              <td className="p-3">{user.role}</td>
-              <td className="p-3">
-                {user.is_active ? "Sí" : "No"}
-              </td>
-              <td className="p-3">
-                {new Date(user.date_joined).toLocaleDateString()}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <>
+      <div className="space-y-4">
+        <ToolbarPage table={table} pageSize={pageSize} setPageSize={setPageSize} />
+      </div>
+    </>
   )
 }
