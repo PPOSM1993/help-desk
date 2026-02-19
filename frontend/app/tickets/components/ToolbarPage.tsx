@@ -14,7 +14,7 @@ export default function ToolbarPage({ table, pageSize, setPageSize }: any) {
     <div className="flex flex-wrap gap-2 items-center">
       {/* Search */}
       <Input
-        placeholder="Buscar Usuario..."
+        placeholder="Buscar ticket..."
         value={(table.getState().globalFilter as string) ?? ""}
         onChange={e => table.setGlobalFilter(e.target.value)}
       className="w-80 rounded-md border-sm focus:ring-0 focus:border-primary-500 focus:outline-none"
@@ -29,13 +29,16 @@ export default function ToolbarPage({ table, pageSize, setPageSize }: any) {
         }
       >
         <SelectTrigger className="w-40 rounded-md border-sm focus:ring-0 focus:border-primary-500 focus:outline-none">
-          <SelectValue placeholder="Rol" />
+          <SelectValue placeholder="Estado" />
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="all">Todos</SelectItem>
-          <SelectItem value="admin">Administrador</SelectItem>
-          <SelectItem value="agent">Agente</SelectItem>
-          <SelectItem value="client">Cliente</SelectItem>
+          <SelectItem value="open">Abierto</SelectItem>
+          <SelectItem value="closed">Cerrado</SelectItem>
+          <SelectItem value="in_progress">En Progreso</SelectItem>
+          <SelectItem value="expired">Expirado</SelectItem>
+          <SelectItem value="pending">Pendiente</SelectItem>
+          <SelectItem value="resolved">Resuelto</SelectItem>
         </SelectContent>
       </Select>
 
@@ -48,11 +51,14 @@ export default function ToolbarPage({ table, pageSize, setPageSize }: any) {
         }
       >
         <SelectTrigger className="w-40 rounded-md border-sm focus:ring-0 focus:border-primary-500 focus:outline-none">
-          <SelectValue placeholder="Activo" />
+          <SelectValue placeholder="Prioridad" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="all">Si</SelectItem>
-          <SelectItem value="low">No</SelectItem>
+          <SelectItem value="all">Todas</SelectItem>
+          <SelectItem value="low">Baja</SelectItem>
+          <SelectItem value="medium">Media</SelectItem>
+          <SelectItem value="high">Alta</SelectItem>
+          <SelectItem value="urgent">Urgente</SelectItem>
         </SelectContent>
       </Select>
 

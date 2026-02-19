@@ -19,11 +19,11 @@ import {
 import { User } from "../types/users"
 
 type Props = {
-  ticket: User
+  user: User
   onEdit: (ticket: User) => void
 }
 
-export function TicketActions({ ticket, onEdit }: Props) {
+export function UserActions({ user, onEdit }: Props) {
   const router = useRouter()
   const [loading, setLoading] = React.useState(false)
 
@@ -36,7 +36,7 @@ export function TicketActions({ ticket, onEdit }: Props) {
       <Button
         size="icon"
         className="bg-yellow-500 hover:bg-yellow-600 text-white cursor-pointer"
-        onClick={() => onEdit(ticket)}
+        onClick={() => onEdit(user)}
       >
         <Pencil className="h-4 w-4" />
       </Button>

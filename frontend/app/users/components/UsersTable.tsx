@@ -22,10 +22,9 @@ import { useState } from "react"
 import { ArrowBigLeft, Plus } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation"
-import ToolbarPage from "@/app/tickets/components/ToolbarPage"
 import { User } from "../types/users"
-import CreateUserModal from "./CreateUserModal"
-import { getColumns } from "./UserClients"
+import { getColumns } from "./UserColumns"
+import ToolbarPage from "./ToolbarPage"
 
 export function UsersTable({ data = [] }: { data: User[] }) {
   const [globalFilter, setGlobalFilter] = useState("")
@@ -37,14 +36,12 @@ export function UsersTable({ data = [] }: { data: User[] }) {
 
   const router = useRouter()
 
-
   const handleEdit = (user: User) => {
     setEditingUser(user)
     setOpen(true)
   }
 
   const columns = getColumns(handleEdit)
-
 
   const table = useReactTable({
     data,
@@ -73,12 +70,137 @@ export function UsersTable({ data = [] }: { data: User[] }) {
     autoResetPageIndex: false,
   })
 
+  const handleCancel = () => {
+    router.push("dashboard")
+  }
 
   return (
-    <>
-      <div className="space-y-4">
-        <ToolbarPage table={table} pageSize={pageSize} setPageSize={setPageSize} />
+    <div className="space-y-4">
+
+      <ToolbarPage table={table} pageSize={pageSize} setPageSize={setPageSize} />
+
+      <div className="rounded-md border overflow-x-auto">
+        <Table className="w-full table-auto bg-blue-500 hover:bg-blue-500">
+          <TableHeader className="bg-blue-500 hover:bg-blue-500">
+            {table.getHeaderGroups().map(headerGroup => (
+              <TableRow key={headerGroup.id}>
+                {headerGroup.headers.map(header => (
+                  <TableHead key={header.id}>
+                    {flexRender(
+                      header.column.columnDef.header,
+                      header.getContext()
+                    )}
+                  </TableHead>
+                ))}
+              </TableRow>
+            ))}
+          </TableHeader>
+
+          <TableBody className="bg-blue-300 hover:bg-blue-300">
+            {table.getRowModel().rows.length ? (
+              table.getRowModel().rows.map(row => (
+                <TableRow key={row.id}>
+                  {row.getVisibleCells().map(cell => (
+                    <TableCell key={cell.id}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center text-muted-foreground"
+                >
+                  No hay Usuarios Registrados
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
       </div>
-    </>
+
+      {/* 🔥 BOTONES + PAGINACIÓN */}
+      <div className="flex items-center gap-2">
+
+        {/* 🟢 CREAR */}
+        <Button
+          className="bg-green-600 hover:bg-green-700 text-white cursor-pointer"
+          onClick={() => {
+            setEditingUser(null)
+            setOpen(true)
+          }}
+        >
+          <Plus className="h-4 w-4 mr-2" />
+          Crear Usuario
+        </Button>
+
+        {/* 🔴 CANCELAR */}
+        <Button
+          className="bg-red-500 hover:bg-red-600 text-white cursor-pointer"
+          onClick={handleCancel}
+        >
+          <ArrowBigLeft className="h-4 w-4 mr-2" />
+          Cancelar
+        </Button>
+
+        {/* 🔥 PAGINACIÓN */}
+        <div className="flex items-center gap-2 ml-auto">
+
+          {/* Botón anterior */}
+          <Button
+            size="sm"
+            variant="outline"
+            className="cursor-pointer"
+            disabled={!table.getCanPreviousPage()}
+            onClick={() => table.previousPage()}
+
+          >
+            {"<"}
+          </Button>
+
+          {/* Números */}
+          {Array.from({ length: table.getPageCount() }).map((_, index) => {
+            const isActive = table.getState().pagination.pageIndex === index
+
+            return (
+              <Button
+                key={index}
+                size="sm"
+                className="bg-green-600 hover:bg-green-500 text-white hover:text-white cursor-pointer"
+                variant={isActive ? "default" : "outline"}
+                onClick={() =>
+                  table.setPagination({
+                    pageIndex: index,
+                    pageSize,
+                  })
+                }
+              >
+                {index + 1}
+              </Button>
+            )
+          })}
+
+          {/* Botón siguiente */}
+          <Button
+            size="sm"
+            variant="outline"
+            className="cursor-pointer"
+            disabled={!table.getCanNextPage()}
+            onClick={() => table.nextPage()}
+          >
+            {">"}
+          </Button>
+
+        </div>
+      </div>
+
+      {/* 🔥 MODAL ÚNICO */}
+
+    </div>
   )
 }
