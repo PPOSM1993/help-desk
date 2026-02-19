@@ -78,7 +78,7 @@ export function TicketTable({ data = [] }: { data: Ticket[] }) {
   return (
     <div className="space-y-4">
 
-      <ToolbarPage table={table} pageSize={pageSize} setPageSize={setPageSizae} />
+      <ToolbarPage table={table} pageSize={pageSize} setPageSize={setPageSize} />
 
       <div className="rounded-md border overflow-x-auto">
         <Table className="w-full table-auto bg-blue-500 hover:bg-blue-500">

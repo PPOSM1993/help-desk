@@ -3,7 +3,7 @@ import { getUsers } from "./services/users.server";
 
 export default async function UsersPage() {
 
-    const users = await getUsers()
+    const user = await getUsers()
 
     return (
         <>
@@ -16,7 +16,7 @@ export default async function UsersPage() {
                     </p>
                 </div>
                 {/* DATA TABLE: SIEMPRE */}
-                <UsersTable data={users} />
+                <UsersTable data={user} />
             </div>
         </>
     )
